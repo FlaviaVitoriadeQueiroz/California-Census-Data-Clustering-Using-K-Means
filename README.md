@@ -136,9 +136,86 @@ A análise revelou padrões importantes nos dados:
 
 ## Conclusão
 
-O algoritmo K-Means demonstrou ser uma ferramenta eficiente para segmentação e análise exploratória de dados habitacionais.
+## Análise dos Clusters
 
-O projeto evidenciou a capacidade do aprendizado não supervisionado em identificar padrões ocultos, fornecendo insights relevantes sobre características socioeconômicas e imobiliárias presentes no conjunto de dados.
+Após a aplicação do algoritmo K-Means, foram identificados quatro clusters distintos.
+
+| Cluster | Registros | Renda Média | Preço Médio | Perfil                                                   |
+| ------- | --------- | ----------- | ----------- | -------------------------------------------------------- |
+| 0       | 7.145     | 3.30        | $163.915    | Interior norte com baixa renda e baixo valor dos imóveis |
+| 1       | 3.046     | 6.80        | $406.009    | Alta renda e imóveis valorizados, regiões premium        |
+| 2       | 8.895     | 3.28        | $171.511    | Regiões costeiras do sul densamente povoadas             |
+| 3       | 1.554     | 4.12        | $216.239    | Áreas urbanas densas com renda intermediária             |
+
+### Cluster 0 – Interior Norte
+
+Representa regiões localizadas principalmente no norte da Califórnia. Possui menor renda média e menor valor dos imóveis, caracterizando áreas menos desenvolvidas economicamente.
+
+### Cluster 1 – Regiões Premium
+
+Agrupa as áreas mais valorizadas do conjunto de dados. Apresenta a maior renda média e os maiores preços dos imóveis, indicando regiões economicamente favorecidas e com mercado imobiliário valorizado.
+
+### Cluster 2 – Litoral Sul
+
+É o maior agrupamento do dataset. Representa regiões costeiras densamente povoadas, com renda relativamente baixa e preços moderados de imóveis.
+
+### Cluster 3 – Áreas Urbanas Densas
+
+Formado por regiões urbanas com alta densidade populacional e valores imobiliários intermediários.
+
+---
+
+## Distribuição dos Clusters
+
+| Cluster   | Quantidade de Registros | Percentual |
+| --------- | ----------------------- | ---------- |
+| Cluster 2 | 8.895                   | 43%        |
+| Cluster 0 | 7.145                   | 35%        |
+| Cluster 1 | 3.046                   | 15%        |
+| Cluster 3 | 1.554                   | 7%         |
+
+Os resultados indicam que a maior parte das regiões da Califórnia pertence a grupos de renda baixa ou intermediária, enquanto as regiões premium representam uma parcela menor do conjunto de dados.
+
+---
+
+## Análise de Correlação
+
+As principais correlações encontradas foram:
+
+| Relação                            | Correlação | Interpretação                                             |
+| ---------------------------------- | ---------- | --------------------------------------------------------- |
+| Longitude ↔ Latitude               | -0.92      | Forte relação geográfica esperada                         |
+| Total Rooms ↔ Households           | 0.92       | Mais domicílios tendem a possuir mais cômodos             |
+| Total Bedrooms ↔ Households        | 0.98       | Forte multicolinearidade                                  |
+| Median Income ↔ Median House Value | 0.69       | A renda influencia significativamente o valor dos imóveis |
+| Population ↔ Total Rooms           | 0.86       | Áreas mais populosas possuem mais unidades habitacionais  |
+
+A relação mais importante foi observada entre renda média e valor dos imóveis, evidenciando o impacto econômico sobre o mercado imobiliário.
+
+---
+
+## Insights Obtidos
+
+A análise permitiu identificar diversos padrões relevantes:
+
+* A renda média é uma das variáveis mais associadas ao valor dos imóveis.
+* Regiões premium representam apenas uma pequena parcela do conjunto de dados.
+* A maioria das regiões pertence a grupos de renda baixa ou intermediária.
+* A localização geográfica influencia diretamente as características socioeconômicas.
+* Variáveis relacionadas à habitação apresentam forte correlação entre si.
+* O K-Means conseguiu identificar segmentos distintos do mercado imobiliário sem utilizar rótulos previamente definidos.
+
+---
+
+## Conclusão
+
+O algoritmo K-Means demonstrou ser uma ferramenta eficiente para identificar padrões ocultos nos dados habitacionais da Califórnia.
+
+A análise revelou quatro clusters representando diferentes perfis socioeconômicos, desde regiões do interior com menor renda até áreas premium com imóveis altamente valorizados.
+
+Além disso, a análise de correlação confirmou a importância da renda média na explicação dos preços dos imóveis.
+
+Os resultados demonstram como técnicas de aprendizado não supervisionado podem gerar insights valiosos para estudos imobiliários, planejamento urbano e análises socioeconômicas.
 
 ---
 
@@ -272,11 +349,87 @@ The analysis revealed important patterns:
 
 ---
 
+## Cluster Analysis
+
+After applying the K-Means algorithm, four distinct clusters were identified.
+
+| Cluster | Records | Median Income | Median House Value | Profile                                                            |
+| ------- | ------- | ------------- | ------------------ | ------------------------------------------------------------------ |
+| 0       | 7,145   | 3.30          | $163,915           | Northern inland regions with lower income and lower housing values |
+| 1       | 3,046   | 6.80          | $406,009           | High-income, high-value housing areas (premium regions)            |
+| 2       | 8,895   | 3.28          | $171,511           | Densely populated southern coastal regions                         |
+| 3       | 1,554   | 4.12          | $216,239           | Dense urban areas with intermediate income levels                  |
+
+### Cluster 0 – Northern Inland Areas
+
+This cluster represents regions located mainly in northern California. These areas have lower median income and lower housing values, indicating less economically developed regions.
+
+### Cluster 1 – Premium Regions
+
+This cluster contains the most economically developed areas in the dataset. It presents the highest median income and the highest housing values.
+
+### Cluster 2 – Southern Coastal Areas
+
+The largest cluster in the dataset. It represents densely populated coastal regions with relatively low income levels and moderate housing prices.
+
+### Cluster 3 – Dense Urban Areas
+
+This cluster groups highly urbanized regions characterized by high population density and intermediate housing values.
+
+---
+
+## Cluster Distribution
+
+| Cluster   | Number of Records | Percentage |
+| --------- | ----------------- | ---------- |
+| Cluster 2 | 8,895             | 43%        |
+| Cluster 0 | 7,145             | 35%        |
+| Cluster 1 | 3,046             | 15%        |
+| Cluster 3 | 1,554             | 7%         |
+
+The results indicate that most California regions belong to low- or middle-income groups, while premium areas represent a smaller share of the dataset.
+
+---
+
+## Correlation Analysis
+
+The strongest relationships found were:
+
+| Relationship                       | Correlation | Interpretation                                         |
+| ---------------------------------- | ----------- | ------------------------------------------------------ |
+| Longitude ↔ Latitude               | -0.92       | Strong geographical relationship                       |
+| Total Rooms ↔ Households           | 0.92        | More households generally imply more rooms             |
+| Total Bedrooms ↔ Households        | 0.98        | Strong multicollinearity                               |
+| Median Income ↔ Median House Value | 0.69        | Income strongly influences housing prices              |
+| Population ↔ Total Rooms           | 0.86        | More populated regions tend to have more housing units |
+
+The strongest socioeconomic relationship was observed between median income and housing value.
+
+---
+
+## Insights
+
+The analysis revealed several important patterns:
+
+* Median income is strongly associated with housing values.
+* Premium housing markets represent only a small portion of the dataset.
+* Most California regions belong to low- or middle-income groups.
+* Geographic location influences socioeconomic characteristics.
+* Housing-related variables show strong correlations.
+* K-Means successfully identified distinct housing market segments without requiring labeled data.
+
+---
+
 ## Conclusion
 
-The K-Means algorithm proved to be an effective tool for segmentation and exploratory analysis of housing data.
+The K-Means algorithm proved to be an effective tool for discovering hidden patterns in California housing data.
 
-This project highlights the power of unsupervised learning techniques in discovering hidden structures within datasets and generating valuable socioeconomic insights.
+The analysis identified four meaningful clusters representing different socioeconomic profiles, ranging from lower-income inland regions to premium housing markets.
+
+Additionally, the correlation analysis highlighted the importance of median income in explaining housing values.
+
+Overall, this project demonstrates how unsupervised learning techniques can generate valuable insights for housing market analysis, urban planning, and socioeconomic studies.
+
 
 ---
 
