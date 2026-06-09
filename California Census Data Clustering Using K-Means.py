@@ -11,6 +11,7 @@ import seaborn as sns
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.impute import SimpleImputer
+from sklearn.metrics import silhouette_score
 
 
 # Carregar o conjunto de dados California Housing
@@ -35,26 +36,27 @@ plt.show()
 
 # Matriz de Correlação
 plt.figure(figsize=(10,8))
-sns.heatmap( df.drop('ocean_proximity', axis=1).corr(), annot=True, cmap="coolwarm")
+sns.heatmap( df.drop('ocean_proximity', axis=1).corr(), annot=True, cmap="coolwarm") # Retirando a variável categórica para correlação 
 plt.show()
 
 
 # Padronização dos Dados
-imputer = SimpleImputer(strategy='mean')
-dados_imputados = imputer.fit_transform(df.drop('ocean_proximity', axis=1))
-scaler = StandardScaler()
-dados_padronizados = scaler.fit_transform(dados_imputados)
+imputer = SimpleImputer(strategy='mean') # Imputando valores ausentes com a média (total_bedrooms tem valores faltantes)
+dados_imputados = imputer.fit_transform(df.drop('ocean_proximity', axis=1)) # Retirando a variável categórica para padronização
+scaler = StandardScaler() # Padronizando os dados para que todas as variáveis tenham média 0 e desvio padrão 1
+dados_padronizados = scaler.fit_transform(dados_imputados) # Dados prontos para o K-Means, sem a variável categórica e com valores faltantes imputados
 
 
 # Método do Cotovelo
-imputer = SimpleImputer(strategy='mean')
-dados_padronizados = scaler.fit_transform(dados_imputados)
-
+'''esse for é utilizado para calcular a inércia (soma das distâncias quadráticas dos pontos ao centro do cluster) para diferentes valores de K (número de clusters).
+A inércia é uma medida de quão bem os clusters estão formados: quanto menor a inércia, melhor os clusters se encaixam nos dados. 
+O método do cotovelo é uma técnica visual para determinar o número ideal de clusters, onde se procura um ponto onde a inércia começa
+a diminuir de forma mais lenta (formando um "cotovelo" no gráfico).'''
 inercia = []
 
-for k in range(1,11):
-    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
-    kmeans.fit(dados_padronizados)
+for k in range(1,11): # Testando K de 1 a 10 para encontrar o número ideal de clusters
+    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10) # n_init=10 é o número de vezes que o algoritmo será executado com diferentes centroides iniciais para garantir uma solução mais estável
+    kmeans.fit(dados_padronizados) # fit é o método que ajusta o modelo K-Means aos dados padronizados
     inercia.append(kmeans.inertia_)
 
 
@@ -69,16 +71,16 @@ plt.show()
 
 
 # Silhouette Score para validar K
-from sklearn.metrics import silhouette_score
-
-scores = []
-for k in range(2, 11):
+scores = [] # O silhouette score é uma métrica que avalia a qualidade dos clusters formados, variando entre -1 e 1.
+for k in range(2, 11): # O silhouette score não é definido para K=1, pois não há clusters para comparar, por isso o loop começa em 2.
     km = KMeans(n_clusters=k, random_state=42, n_init=10)
     labels = km.fit_predict(dados_padronizados)
     scores.append(silhouette_score(dados_padronizados, labels))
 
 plt.plot(range(2, 11), scores, marker='o')
 plt.title('Silhouette Score por K')
+plt.xlabel('Número de Clusters')
+plt.ylabel('Silhouette Score')
 plt.show()
 
 
